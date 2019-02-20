@@ -3,7 +3,7 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const path = require('path');
 const sqlite = require('../database/index.js');
-const utils = require('../../utilities/utilities.js');
+const utils = require('../utilities/utilities.js');
 
 const app = express();
 

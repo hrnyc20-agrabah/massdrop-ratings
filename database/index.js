@@ -3,10 +3,10 @@
 // in command line, run 'sqlite3 reviews.db'
 // then in sqlite terminal, run '.read massdrop.sql'
 
-// const items = require('../../utilities/items.json')
-// const users = require('../../utilities/users.json')
-// const reviews = require('../../utilities/reviews.json')
-// const comments = require('../../utilities/comments.json')
+const items = require('../utilities/items.json')
+const users = require('../utilities/users.json')
+const reviews = require('../utilities/reviews.json')
+const comments = require('../utilities/comments.json')
 
 
 

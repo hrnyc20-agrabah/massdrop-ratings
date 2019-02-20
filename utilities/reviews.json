@@ -1,0 +1,42 @@
+[
+    {
+        "review_id": "r1",
+        "review_date": "Thu Feb 07 2019 11: 00: 04 GMT-0500 (EST)",
+        "review_author_id": "u2",
+        "review_body": "Eos veniam aut excepturi. Et esse ad aperiam excepturi expedita consequatur aut qui. Quibusdam modi eos quia rerum ut. Libero praesentium commodi ipsum voluptatem possimus perferendis ex atque. Provident porro a iusto accusamus dicta itaque omnis. Sint possimus ut.",
+        "review_rating": 4,
+        "review_item_id": "6a80573e-c0d8-40d3-a903-79e9f948982a"
+    },
+    {
+        "review_id": "r2",
+        "review_date": "Wed Feb 06 2019 20: 52: 48 GMT-0500 (EST)",
+        "review_author_id": "u4",
+        "review_body": "Quod dolor qui tempore dolor. Sequi omnis culpa commodi aut. Nostrum labore reiciendis impedit delectus rerum ratione laudantium. Ratione aspernatur necessitatibus minus voluptatem mollitia officia illo quidem. Aut omnis sit dicta dignissimos ut aut eius corporis. Hic ipsum assumendaomnis illum ullam nisi.",
+        "review_rating": 3,
+        "review_item_id": "6a80573e-c0d8-40d3-a903-79e9f948982a"
+    },
+    {
+        "review_id": "r3",
+        "review_date": "Wed Feb 06 2019 18: 28: 48 GMT-0500 (EST)",
+        "review_author_id": "u3",
+        "review_body": "Laborum assumenda omnis eos ex nesciunt. Dolore magnam ea illo minima harum ratione magnam quia voluptatem. Excepturi qui vel inventore voluptatem.",
+        "review_rating": 2,
+        "review_item_id": "6a80573e-c0d8-40d3-a903-79e9f948982a"
+    },
+    {
+        "review_id": "r4",
+        "review_date": "Thu Feb 07 2019 02: 44: 37 GMT-0500 (EST)",
+        "review_author_id": "u1",
+        "review_body": "Consectetur tempore ut facilis dolores distinctio dolores eum quos. Ut sed hic qui ut aspernatur ipsum quas fugit numquam. Dolorem sint quos totam dolorem quia quibusdam non asperiores et. Quo dolorem sit alias. Eligendi culpa maiores rerum.",
+        "review_rating": 5,
+        "review_item_id": "6a80573e-c0d8-40d3-a903-79e9f948982a"
+    },
+    {
+        "review_id": "r5",
+        "review_date": "Thu Feb 07 2019 16: 42: 53 GMT-0500 (EST)",
+        "review_author_id": "u3",
+        "review_body": "Eos vero ut quo. Rerum ea est. Maiores dolor ducimus ab sit suscipit.",
+        "review_rating": 3,
+        "review_item_id": "6a80573e-c0d8-40d3-a903-79e9f948982a"
+    }
+]
