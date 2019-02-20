@@ -13,30 +13,55 @@ import { Reply } from 'styled-icons/material/Reply'
 const GrayReply = styled(Reply)`
 	color: #849493;
 	height: 1em;
+	padding-bottom: 4px;
 `
-
 
 const GrayThumbUp = styled(ThumbUp)`
 display:inline-block;
 	color: #849493;
 	height: 1em;
 	margin-left: 7px;
+	margin-righ: 5px;
 	padding-bottom: 3px;
 	padding-left: 31px;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
-
 const TealPersonAdd = styled(PersonAdd)`
-display: inline-block;
+	display: inline-block;
   color: #14b6ad;
   height: 1.5em;
-  margin-left: 10px;
+	margin-left: 10px;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
 const TealGroupAdd = styled(GroupAdd)`
 display: inline-block;
   color: #14b6ad;
   height: 1.5em;
 	margin-left: 10px;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
+
 `
+//   < div class="review-card" >
+//     <div class="user">
+//       <div class="user-pic"></div>
+//       <div class="user-inner-wrap">
+//         <div class="user-info">
+//           <div class="user-nc">
+//             <div class="user-name">Jwb4467</div>
+//             <div class="user-count">0</div>
+//           </div>
+//           <div class="user-time">5W</div>
+//         </div>
+//         <div class="user-status">Verified purchaser</div>
+//         <div class='review-body'>lnasdlgnldfngm,sdfng,msdfng msdfngmsdfngmsdfngmsdfngmsdfngmsdfngmsdfngmsdf ngmsdfngmsdfngmsdfngmsdfngmsdfngmsdfngms dfngmsdfngmsdfngmsdfng,mnsdf,mgnsdf,m ng,msdfbg,bm dsfbn,mvn adf,mgn</div>
+//       </div>
+
+//     </div>
+// </div >
+
 
 const StyledReviewCard = styled.div`
 	display: block;
@@ -63,12 +88,15 @@ const StyledAvatar = styled.img`
   max-height: 32px;
 	border-radius: 50%;
 	border: 1px solid #d9dede;
+	cursor: pointer;
 `
 const StyledUsername = styled.div`
 	display: inline-block;
 	margin-left: 10px;
 	font-weight: bold;
 	font-size: 12px;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
 const LikesCount = styled.div`
 	display: inline-block;
@@ -116,13 +144,19 @@ const StyledReviewBody = styled.div`
 	paddign-top: 3px;
 	padding-left: 34px;
 	`
+const StyledReviewCommentFooter = styled.div`
+	display:block;
+
+`
 const ReplyWrapper = styled.div`
 	display: inline-block;
 	margin-left: 10px;
 	font-size: 12px;
 	font-weight: 500;
 	letter-spacing: 0.95px;
-	
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
+
 `
 const StyledActiveSubmitButton = styled.button`
 	cursor: pointer;
@@ -164,88 +198,107 @@ const StyledCancelButton = styled.button`
 `
 
 class Review extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isAdded: false,
-			comment: props.review,
-			editorHtml: '',
-			isEditorShown: false,
-			quillPlaceholder: 'Add a reply...'
-		};
-	}
-	// review view - each review has its comments
+  constructor(props) {
+    super(props)
+    this.state = {
+      isAdded: false,
+      comment: props.review,
+      editorHtml: '',
+      isEditorShown: false,
+      quillPlaceholder: 'Add a reply...'
+    }
+  }
+  render() {
+    const {
+      comments,
+      review_author_id,
+      review_body,
+      review_date,
+      review_id,
+      review_item_id,
+      review_rating,
+      user_avatar,
+      user_id,
+      user_isDeleted,
+      user_isHidden,
+      user_isVerified,
+      user_likesQty,
+      user_name
+    } = this.props.review
 
-	render() {
-		const {
-			comments,
-			review_author_id,
-			review_body,
-			review_date,
-			review_id,
-			review_item_id,
-			review_rating,
-			user_avatar,
-			user_id,
-			user_isDeleted,
-			user_isHidden,
-			user_isVerified,
-			user_likesQty,
-			user_name
-		} = this.props.review
+    return (
+      // <div class="review-card">
+      //   <div class="user">
+      //     <div class="user-pic"></div>
+      //     <div class="user-inner-wrap">
+      //       <div class="user-info">
+      //         <div class="user-nc">
+      //           <div class="user-name">Jwb4467</div>
+      //           <div class="user-count">0</div>
+      //         </div>
+      //         <div class="user-time">5W</div>
+      //       </div>
+      //       <div class="user-status">Verified purchaser</div>
+      //       <div class='review-body'>lnasdlgnldfngm,sdfng,msdfng msdfngmsdfngmsdfngmsdfngmsdfngmsdfngmsdfngmsdf ngmsdfngmsdfngmsdfngmsdfngmsdfngmsdfngms dfngmsdfngmsdfngmsdfng,mnsdf,mgnsdf,m ng,msdfbg,bm dsfbn,mvn adf,mgn</div>
+      //     </div>
 
-		return (
-			<StyledReviewCard>
-				<StyledAvatar src={user_avatar}></StyledAvatar>
-				<StyledUsername>{user_name}</StyledUsername>
-				<LikesCount>{user_likesQty}</LikesCount>
-				{this.state.isAdded ? < TealGroupAdd /> : < TealPersonAdd />}
+      //   </div>
+      // </div>
 
-				<StyledTime>{review_date}</StyledTime>
-				{user_isVerified === 1 ? (<StyledVerified>VERIFIED PURCHASER</StyledVerified>) : null}
+      <StyledReviewCard>
+        <StyledAvatar src={user_avatar}></StyledAvatar>
+        <StyledUsername>{user_name}</StyledUsername>
+        <LikesCount>{user_likesQty}</LikesCount>
+        {this.state.isAdded ? < TealGroupAdd /> : < TealPersonAdd />}
 
-				<StyledReviewBody>{review_body}</StyledReviewBody>
-				<GrayThumbUp />
-				<ReplyWrapper onClick={() => { this.setState({ isEditorShown: true }) }}>REPLY</ReplyWrapper>
-				{this.state.isEditorShown ?
-					(
-						<div>
-							<ReactQuill
-								theme='snow'
-								onChange={this.handleChange}
-								value={this.state.editorHtml}
-								modules={{
-									toolbar: [
-										['bold', 'italic', 'underline', 'strike'],
-										[{ 'list': 'ordered' }, { 'list': 'bullet' }],
-										['link', 'image']
-									],
-									clipboard: {
-										matchVisual: false,
-									}
-								}}
-								formats={[
-									'bold', 'italic', 'underline', 'strike',
-									'list', 'bullet',
-									'link', 'image'
-								]}
-								bounds={'.app'}
-								placeholder={this.state.quillPlaceholder}
-							/>
-							{this.state.editorHtml.length > 0 ? (<StyledActiveSubmitButton onClick={this.createComment}>SUBMIT</StyledActiveSubmitButton>) : (<StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>)}
-							<StyledCancelButton onClick={() => { this.setState({ isEditorShown: false }) }}>CANCEL</StyledCancelButton>
-						</div>
-					) : null
-				}
-				{
-					comments.length && comments.map((comment, key) => (
-						<Comment submitReply={this.props.submitReply} comment={comment} key={comment.comment_id} />
-					))
-				}
+        <StyledTime>{review_date}</StyledTime>
+        {user_isVerified === 1 ? (<StyledVerified>VERIFIED PURCHASER</StyledVerified>) : null}
 
-			</StyledReviewCard>
-		)
-	}
+        <StyledReviewBody>{review_body}</StyledReviewBody>
+        <StyledReviewCommentFooter>
+          <GrayThumbUp />
+          <ReplyWrapper onClick={() => { this.setState({ isEditorShown: true }) }}> <GrayReply /> REPLY</ReplyWrapper>
+          {this.state.isEditorShown ?
+            (
+              <div>
+                <ReactQuill
+                  theme='snow'
+                  onChange={this.handleChange}
+                  value={this.state.editorHtml}
+                  modules={{
+                    toolbar: [
+                      ['bold', 'italic', 'underline', 'strike'],
+                      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                      ['link', 'image']
+                    ],
+                    clipboard: {
+                      matchVisual: false,
+                    }
+                  }}
+                  formats={[
+                    'bold', 'italic', 'underline', 'strike',
+                    'list', 'bullet',
+                    'link', 'image'
+                  ]}
+                  bounds={'.app'}
+                  placeholder={this.state.quillPlaceholder}
+                />
+                {this.state.editorHtml.length > 0 ? (<StyledActiveSubmitButton onClick={this.createComment}>SUBMIT</StyledActiveSubmitButton>) : (<StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>)}
+                <StyledCancelButton onClick={() => { this.setState({ isEditorShown: false }) }}>CANCEL</StyledCancelButton>
+              </div>
+            ) : null
+          }
+          {
+            comments.length && comments.map((comment, key) => (
+              <Comment submitReply={this.props.submitReply} comment={comment} key={comment.comment_id} />
+            ))
+          }
+
+        </StyledReviewCommentFooter>
+
+      </StyledReviewCard>
+    )
+  }
 }
 
 /*

@@ -11,42 +11,50 @@ import { Reply } from 'styled-icons/material/Reply'
 const GrayReply = styled(Reply)`
 	color: #849493;
 	height: 1em;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
 
 const TealPersonAdd = styled(PersonAdd)`
 	display: inline-block;
   color: #14b6ad;
   height: 1.5em;
-  margin-left: 10px;
+	margin-left: 10px;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
 const TealGroupAdd = styled(GroupAdd)`
 	display: inline-block;
   color: #14b6ad;
   height: 1.5em;
 	margin-left: 10px;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
 const GrayThumbUp = styled(ThumbUp)`
 	color: #849493;
 	height: 1em;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
-// const StyledCommentWrapper = styled.div`
-// 	display: block;
-// 	font-family: 'Helvetica';
-// 	font-weight: 300;
-// 	font-size: 13px;
-// 	line-height: 20px;
-// 	color: #5b6a69;
-// 	max-width: 500px;
-// 	border-style: solid;
-// 	border-width: thin;
-// 	border-color: #D3D3D3;
-// 	box-shadow: 0.75px 0.75px #D3D3D3;
-// 	border-radius: 4px;
-// 	padding: 20px;
-// 	margin-top: 15px;
-// 	margin-bottom: 15px;
-// 	margin-left 10px;
-// `
+const StyledCommentWrapper = styled.div`
+	display: block;
+	font-family: 'Helvetica';
+	font-weight: 300;
+	font-size: 13px;
+	line-height: 20px;
+	color: #5b6a69;
+	max-width: 500px;
+	border-style: solid;
+	border-width: thin;
+	border-color: #D3D3D3;
+	box-shadow: 0.75px 0.75px #D3D3D3;
+	border-radius: 4px;
+	padding: 20px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left 10px;
+`
 
 const StyledCommentBody = styled.div`
 	display: inline;
@@ -77,6 +85,8 @@ const StyledUsername = styled.div`
 	margin-left: 5px;
 	font-weight: bold;
 	font-size: 12px;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
 const StyledRepliedTo = styled.div`
 	display: inline-block;
@@ -86,9 +96,13 @@ const StyledRepliedTo = styled.div`
 	padding-left: 5px;
 	padding-right: 5px;
 	border-radius:50px;
+	&:hover {color: #18d7cc;};
+	cursor: pointer;
 `
 const StyledCommentCard = styled.div`
-	padding-left: 43px;
+	margin-left: 43px;
+	background: gray;
+	border: solid 1px black;
 `
 const StyledAvatar = styled.img`
 	display: inline-block;
@@ -98,6 +112,7 @@ const StyledAvatar = styled.img`
 	border-radius: 50%;
 	border: 1px solid #d9dede;
 	margin-top: 10px;
+	cursor: pointer;
 `
 const StyledTime = styled.div`
 	display: inline-block;

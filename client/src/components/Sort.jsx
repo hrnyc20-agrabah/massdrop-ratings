@@ -2,25 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledSort = styled.div`
-		display:inline-block;
-		
 		float:right;
     font-family: 'Lato';
     font-size: 14px;
     font-weight: 700;
     color: #14b6ad;
-    vertical-align: middle;
 		padding: 3px ;
-		
-		width: 220px;
-    height: 1.5em;
-		
-		margin-right: 120px;
-		
+		min-width: 205px;
     border-radius: 3px;
     border-style: solid;
     border-width: thin;
-    border-color: #14b6ad;
+		border-color: #d9dede;
+		&:hover {border-color: #14b6ad;};
+		cursor: pointer;
 `
 
 class Sort extends React.Component {
@@ -65,5 +59,60 @@ class Sort extends React.Component {
 	}
 
 }
+
+
+// import React from 'react';
+// import { Dropdown } from '@bit/primefaces.primereact.dropdown';
+
+// class Example extends React.Component {
+// 	constructor(props) {
+// 		super(props);
+// 		this.state = {
+// 			citySelectItems: [
+// 				{ label: 'New York', value: 'NY' },
+// 				{ label: 'Rome', value: 'RM' },
+// 				{ label: 'London', value: 'LDN' },
+// 				{ label: 'Istanbul', value: 'IST' },
+// 				{ label: 'Paris', value: 'PRS' }
+// 			],
+// 			city: ''
+// 		};
+// 	}
+
+// 	render() {
+// 		return (
+// 			<div>
+// 				<link
+// 					rel='stylesheet'
+// 					type='text/css'
+// 					href='https://cdn.jsdelivr.net/npm/primereact@2.0.0-rc.1/resources/themes/nova-light/theme.css'
+// 				/>
+// 				<link
+// 					rel='stylesheet'
+// 					type='text/css'
+// 					href='https://cdn.jsdelivr.net/npm/primereact@2.0.0-rc.1/resources/primereact.min.css'
+// 				/>
+// 				<link
+// 					rel='stylesheet'
+// 					type='text/css'
+// 					href='https://cdn.jsdelivr.net/npm/primeicons@1.0.0/primeicons.css'
+// 				/>
+
+// 				<Dropdown
+// 					style={{ width: 150 }}
+// 					value={this.state.city}
+// 					options={this.state.citySelectItems}
+// 					onChange={e => {
+// 						this.setState({ city: e.value });
+// 					}}
+// 					placeholder='Select a City'
+// 				/>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// export default <Example />;
+
 
 export default Sort

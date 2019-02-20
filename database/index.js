@@ -3,10 +3,10 @@
 // in command line, run 'sqlite3 reviews.db'
 // then in sqlite terminal, run '.read massdrop.sql'
 
-const items = require('../../utilities/items.json')
-const users = require('../../utilities/users.json')
-const reviews = require('../../utilities/reviews.json')
-const comments = require('../../utilities/comments.json')
+// const items = require('../../utilities/items.json')
+// const users = require('../../utilities/users.json')
+// const reviews = require('../../utilities/reviews.json')
+// const comments = require('../../utilities/comments.json')
 
 
 
@@ -14,10 +14,10 @@ const comments = require('../../utilities/comments.json')
 const sqlite3 = require('sqlite3').verbose()
 
 const db = new sqlite3.Database('reviews.db', (error) => {
-	if (error) {
-		return console.error('Error connecting to DB - DB', error.message);
-	}
-	console.log('Connected to the SQLite database Reviews')
+  if (error) {
+    return console.error('Error connecting to DB - DB', error.message);
+  }
+  console.log('Connected to the SQLite database Reviews')
 })
 
 
@@ -76,5 +76,5 @@ const db = new sqlite3.Database('reviews.db', (error) => {
 // })
 
 module.exports = {
-	db
+  db
 }
