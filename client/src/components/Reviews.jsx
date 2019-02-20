@@ -12,12 +12,7 @@ const Reviews = (props) => {
 			{props.reviews.map((review, key) => (
 				<Review submitReply={props.submitReply} review={review} key={review.review_id} />
 			))}
-			
-
 		</div>
-
-
-
 	)
 }
 
