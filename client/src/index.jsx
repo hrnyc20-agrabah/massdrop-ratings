@@ -5,12 +5,13 @@ import styled from 'styled-components'
 import Search from './components/Search.jsx'
 import Sort from './components/Sort.jsx'
 import Reviews from './components/Reviews.jsx'
+import ReviewsTab from './components/ReviewsTab.jsx'
 import Comment from './components/Comment.jsx'
 
 const OuterWrapper = styled.div`
-max-width: 700px;
+  max-width: 700px;
+  font-family: 'Lato';
 `
-
 const StyledReviews = styled.div`
 	font-family: 'Lato';
 	font-weight: 700;
@@ -18,29 +19,12 @@ const StyledReviews = styled.div`
 	letter-spacing: 0.9px;
 	color: #14b6ad;
 	cursor: hand;
-`
+  `
 const SearchSort = styled.div`
 	display: flex;
 	max-width: 700px;
 	justify-content: space-between;
 `
-const StyledReviewsCount = styled.div`
-	display: inline-block
-	font-family: 'Lato';
-	font-weight: bold;
-	font-size: 14px;
-	letter-spacing: 0.9px;
-	color: #14b6ad;
-	margin-left: 6px;
-	min-width: 20px;
-	background: #eefaf9;
-	border-radius: 3px;
-	padding: 2px;
-	cursor: hand;
-	text-align: center;
-	`
-
-
 const ReviewsCommentsBlock = styled.div`
 	max-width: 500;
 `
@@ -63,6 +47,7 @@ class App extends React.Component {
   }
 
   getReviews(itemname) {
+
     axios.get(`/api/items/${itemname}/reviews`)
       .then(response => {
         this.setState({ reviews: response.data })
@@ -87,7 +72,7 @@ class App extends React.Component {
     return (
       <OuterWrapper>
 
-        <StyledReviews>REVIEWS  <StyledReviewsCount>{this.state.reviews.length}</StyledReviewsCount></StyledReviews>
+        <ReviewsTab reviewsQuantity={this.state.reviews.length} />
         <SearchSort>
           <Search />
           <Sort />

@@ -1,8 +1,7 @@
 const express = require('express');
-const axios = require('axios');
 const bodyParser = require('body-parser');
 const path = require('path');
-const sqlite = require('../database/index.js');
+const sqlite = require('../database/connect.js');
 const utils = require('../utilities/utilities.js');
 
 const app = express();
@@ -20,11 +19,11 @@ app.get('/items/:itemname', (req, res) => {
 app.get('/api/items/:itemname/reviews', (req, res) => {
   const itemname = utils.titleize(req.params.itemname);
   const query = `SELECT * FROM reviews JOIN users ON users.user_id = reviews.review_author_id WHERE review_item_id = (SELECT item_id FROM items WHERE item_name="${itemname}") ORDER BY review_date ASC`;
-
-  sqlite.db.all(query, (err, docs) => {
+  sqlite.all(query, (err, docs) => {
     if (err) {
       // eslint-disable-next-line no-console
-      console.log(`could not get response from DB on itemname ${itemname} - SERVER`, err);
+      console.log(`could not get response from DB on item name ${itemname} - SERVER`, err);
+      res.sendStatus(404);
     } else {
       const allReviewsWithComments = [];
       const promises = [];
@@ -51,11 +50,12 @@ app.get('/api/items/:itemname/reviews', (req, res) => {
           'comments.comment_replied_to_id',
           'comments.comment_review_id',
           'comments.comment_body',
+          'comments.comment_likes',
         ];
         const commentsQuery = `SELECT ${selectCreator.join(', ')}, ${selectReplier.join(', ')}, ${selectComment.join(', ')} FROM comments JOIN users AS creator ON creator.user_id = comments.comment_author_id JOIN users AS replier ON replier.user_id = comments.comment_replied_to_id WHERE comments.comment_review_id="${review.review_id}" ORDER BY comments.comment_date ASC`;
         // eslint-disable-next-line no-unused-vars
         promises.push(new Promise((resolve, reject) => {
-          sqlite.db.all(commentsQuery, (error, response) => {
+          sqlite.all(commentsQuery, (error, response) => {
             if (err) {
               // eslint-disable-next-line no-console
               console.log('error on getting comments (inside Promise)', error);

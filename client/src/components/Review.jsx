@@ -62,7 +62,12 @@ display: inline-block;
 //     </div>
 // </div >
 
+const ReviewCard = styled.div`
+  font-family: 'Lato';
+  width: 100%;
 
+
+`
 const StyledReviewCard = styled.div`
 	display: block;
 	font-family: 'Helvetica';
@@ -245,7 +250,7 @@ class Review extends React.Component {
       //   </div>
       // </div>
 
-      <StyledReviewCard>
+      <ReviewCard>
         <StyledAvatar src={user_avatar}></StyledAvatar>
         <StyledUsername>{user_name}</StyledUsername>
         <LikesCount>{user_likesQty}</LikesCount>
@@ -296,7 +301,7 @@ class Review extends React.Component {
 
         </StyledReviewCommentFooter>
 
-      </StyledReviewCard>
+      </ReviewCard>
     )
   }
 }
