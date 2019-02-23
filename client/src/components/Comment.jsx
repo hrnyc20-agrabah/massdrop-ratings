@@ -219,12 +219,12 @@ class Comment extends React.Component {
           )}
           <Style.UserDate>{comment_date}</Style.UserDate>
           <br />
-          <div>{replier_name}</div>
-          <div>{comment_body}</div>
+          <Style.UserName>{replier_name}</Style.UserName>
+          <Style.ReviewBody>{comment_body}</Style.ReviewBody>
         </div>
         <br />
         <div>
-          {/* <GrayThumbUp /> */}
+          <Style.GrayThumbUp />
           <div
             onClick={() => {
               this.setState({ isEditorShown: true });
@@ -263,19 +263,19 @@ class Comment extends React.Component {
               placeholder={this.state.quillPlaceholder}
             />
             {this.state.editorHtml.length > 0 ? (
-              <StyledActiveSubmitButton onClick={this.createComment}>
+              <Style.ActiveSubmitButton onClick={this.createComment}>
                 SUBMIT
-              </StyledActiveSubmitButton>
+              </Style.ActiveSubmitButton>
             ) : (
-              <StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>
+              <Style.DisabledSubmitButton>SUBMIT</Style.DisabledSubmitButton>
             )}
-            <StyledCancelButton
+            <Style.CancelButton
               onClick={() => {
                 this.setState({ isEditorShown: false });
               }}
             >
               CANCEL
-            </StyledCancelButton>
+            </Style.CancelButton>
           </div>
         ) : null}
       </div>
