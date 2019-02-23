@@ -218,12 +218,19 @@ export const Style = {
   UserW: styled.div`
     display: flex;
     font-family: 'Lato';
+    flex-wrap: nowrap;
+    padding: 5px;
+    justify-content: space-between;
+    align-items: center;
+  `,
+  ReviewW: styled.div`
+    display: flex;
+    font-family: 'Lato';
     flex-wrap: wrap;
     padding: 5px;
     justify-content: space-between;
   `,
   UserAvatar: styled.img`
-    margin-right: 16px;
     border-radius: 100%;
     vertical-align: middle;
     max-width: 32px;
@@ -231,14 +238,16 @@ export const Style = {
     border: 1px solid #d9dede;
     margin-top: 10px;
     cursor: pointer;
+    flex: 1;
   `,
   //wrapper for username, likes count and followers
   UserDataW: styled.div`
     display: flex;
     font-family: 'Lato';
-    display: flex;
-    width: 100px;
+    width: 100%;
+    align-items: center;
     margin-bottom: 10px;
+    flex: 4;
   `,
   UserName: styled.div`
     margin-left: 10px;
@@ -351,6 +360,62 @@ export const Style = {
     cursor: pointer;
     text-align: center;
     padding: 2px 1px 2px 1px;
+  `,
+  GrayReply: styled(Reply)`
+    color: #849493;
+    height: 1em;
+    padding-bottom: 4px;
+  `,
+  GrayThumbUp: styled(ThumbUp)`
+    display: inline-block;
+    color: #849493;
+    height: 1em;
+    margin-left: 7px;
+    margin-righ: 5px;
+    padding-bottom: 3px;
+    padding-left: 31px;
+    &:hover {
+      color: #18d7cc;
+    }
+    cursor: pointer;
+  `,
+  ActiveSubmitButton: styled.button`
+    cursor: pointer;
+    letter-spacing: 0.9px;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.9px;
+    color: white;
+    border-color: #14b6ad;
+    border-radius: 1px;
+    background: #14b6ad;
+    min-width: 20px;
+  `,
+  DisabledSubmitButton: styled.button`
+    cursor: default;
+    letter-spacing: 0.9px;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.9px;
+    color: white;
+    border-color: #14b6ad;
+    border-radius: 1px;
+    background: #14b6ad;
+    opacity: 0.3;
+    min-width: 20px;
+  `,
+  CancelButton: styled.button`
+    cursor: pointer;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.9px;
+    color: #849493;
+    border: none;
+    background: none;
+    min-width: 20px;
   `,
 };
 // module.exports: {
