@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const sqlite = require('../database/connect.js');
 const utils = require('../utilities/utilities.js');
+const cors = require('cors');
 
 const app = express();
 
 // middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/../client/dist`));

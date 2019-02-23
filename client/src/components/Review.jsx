@@ -10,44 +10,6 @@ import { Reply } from 'styled-icons/material/Reply';
 import { Style } from '../../../utilities/styles.js';
 import { timeAgo } from '../../../utilities/utilities';
 
-const GrayReply = styled(Reply)`
-  color: #849493;
-  height: 1em;
-  padding-bottom: 4px;
-`;
-const GrayThumbUp = styled(ThumbUp)`
-  display: inline-block;
-  color: #849493;
-  height: 1em;
-  margin-left: 7px;
-  margin-righ: 5px;
-  padding-bottom: 3px;
-  padding-left: 31px;
-  &:hover {
-    color: #18d7cc;
-  }
-  cursor: pointer;
-`;
-const TealPersonAdd = styled(PersonAdd)`
-  display: inline-block;
-  color: #14b6ad;
-  height: 1.5em;
-  margin-left: 10px;
-  &:hover {
-    color: #18d7cc;
-  }
-  cursor: pointer;
-`;
-const TealGroupAdd = styled(GroupAdd)`
-  display: inline-block;
-  color: #14b6ad;
-  height: 1.5em;
-  margin-left: 10px;
-  &:hover {
-    color: #18d7cc;
-  }
-  cursor: pointer;
-`;
 //   < div class="review-card" >
 //     <div class="user">
 //       <div class="user-pic"></div>
@@ -66,46 +28,6 @@ const TealGroupAdd = styled(GroupAdd)`
 //     </div>
 // </div >
 
-const StyledTime = styled.div`
-  display: inline-block;
-  float: right;
-  vertical-align: middle;
-  font-size: 12px;
-  line-height: 20px;
-  padding-top: 5px;
-  padding-right: -4px;
-`;
-const StyledVerified = styled.div`
-  font-family: 'Lato';
-  font-weight: 400;
-  font-size: 12px;
-  letter-spacing: 1px;
-  text-align: left;
-  padding-top: 5px;
-  padding-left: 44px;
-  padding-bottom: 10px;
-  line-height: normal;
-`;
-const StyledReviewBody = styled.div`
-  display: inline-block;
-  margin-left: 10px;
-  paddign-top: 3px;
-  padding-left: 34px;
-`;
-const StyledReviewCommentFooter = styled.div`
-  display: block;
-`;
-const ReplyWrapper = styled.div`
-  display: inline-block;
-  margin-left: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.95px;
-  &:hover {
-    color: #18d7cc;
-  }
-  cursor: pointer;
-`;
 const StyledActiveSubmitButton = styled.button`
   cursor: pointer;
   letter-spacing: 0.9px;
@@ -199,76 +121,90 @@ class Review extends React.Component {
       //   </div>
       // </div>
       <Style.ReviewCard>
-        <Style.UserW>
-          <Style.UserAvatar src={user_avatar} />
-          <Style.UserDataW>
-            <Style.UserName>{user_name}</Style.UserName>
-            <Style.UserLikesCount>{user_likesQty}</Style.UserLikesCount>
-            {this.state.isAdded ? (
-              <Style.TealGroupAdd />
-            ) : (
-                <Style.TealPersonAdd />
-              )}
-          </Style.UserDataW>
-          <Style.UserDate>{timeAgo(JSON.parse(review_date))}</Style.UserDate>
-        </Style.UserW>
-        {user_isVerified === 1 ? (
-          <Style.isVerified>VERIFIED PURCHASER</Style.isVerified>
-        ) : null}
-        <Style.ReviewBody>{review_body}</Style.ReviewBody>
-        <div
-          onClick={() => {
-            this.setState({ isEditorShown: true });
-          }}
-        >
-          {' '}
-          REPLY
-        </div>
-        {this.state.isEditorShown ? (
-          <div>
-            <ReactQuill
-              theme="snow"
-              onChange={this.handleChange}
-              value={this.state.editorHtml}
-              modules={{
-                toolbar: [
-                  ['bold', 'italic', 'underline', 'strike'],
-                  [{ list: 'ordered' }, { list: 'bullet' }],
-                  ['link', 'image'],
-                ],
-                clipboard: {
-                  matchVisual: false,
-                },
-              }}
-              formats={[
-                'bold',
-                'italic',
-                'underline',
-                'strike',
-                'list',
-                'bullet',
-                'link',
-                'image',
-              ]}
-              bounds={'.app'}
-              placeholder={this.state.quillPlaceholder}
-            />
-            {this.state.editorHtml.length > 0 ? (
-              <StyledActiveSubmitButton onClick={this.createComment}>
-                SUBMIT
-              </StyledActiveSubmitButton>
-            ) : (
-                <StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>
-              )}
-            <StyledCancelButton
-              onClick={() => {
-                this.setState({ isEditorShown: false });
-              }}
-            >
-              CANCEL
-            </StyledCancelButton>
+        <Style.ReviewW>
+          <Style.UserW>
+            <div style={{ flex: 1 }}>
+              <Style.UserAvatar src={user_avatar} />
+            </div>
+            <Style.UserDataW style={{ flex: 4 }}>
+              <div>
+                <Style.UserName>{user_name}</Style.UserName>
+              </div>
+              <div>
+                <Style.UserLikesCount>{user_likesQty}</Style.UserLikesCount>
+              </div>
+              <div style={{ marginRight: 'auto' }}>
+                {this.state.isAdded ? (
+                  <Style.TealGroupAdd />
+                ) : (
+                  <Style.TealPersonAdd />
+                )}
+              </div>
+              <div>
+                <Style.UserDate>
+                  {timeAgo(JSON.parse(review_date))}
+                </Style.UserDate>
+              </div>
+            </Style.UserDataW>
+          </Style.UserW>
+          {user_isVerified === 1 ? (
+            <Style.isVerified>VERIFIED PURCHASER</Style.isVerified>
+          ) : null}
+          <Style.ReviewBody>{review_body}</Style.ReviewBody>
+          <div
+            onClick={() => {
+              this.setState({ isEditorShown: true });
+            }}
+          >
+            {' '}
+            REPLY
           </div>
-        ) : null}
+          {this.state.isEditorShown ? (
+            <div>
+              <ReactQuill
+                theme="snow"
+                onChange={this.handleChange}
+                value={this.state.editorHtml}
+                modules={{
+                  toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    ['link', 'image'],
+                  ],
+                  clipboard: {
+                    matchVisual: false,
+                  },
+                }}
+                formats={[
+                  'bold',
+                  'italic',
+                  'underline',
+                  'strike',
+                  'list',
+                  'bullet',
+                  'link',
+                  'image',
+                ]}
+                bounds={'.app'}
+                placeholder={this.state.quillPlaceholder}
+              />
+              {this.state.editorHtml.length > 0 ? (
+                <Style.ActiveSubmitButton onClick={this.createComment}>
+                  SUBMIT
+                </Style.ActiveSubmitButton>
+              ) : (
+                <Style.DisabledSubmitButton>SUBMIT</Style.DisabledSubmitButton>
+              )}
+              <Style.CancelButton
+                onClick={() => {
+                  this.setState({ isEditorShown: false });
+                }}
+              >
+                CANCEL
+              </Style.CancelButton>
+            </div>
+          ) : null}
+        </Style.ReviewW>
         {comments.length &&
           comments.map(comment => (
             <Comment

@@ -44,12 +44,12 @@ class App extends React.Component {
 
   getReviews(itemid, selectedOption, like = '') {
     axios
-      .get(
-        `${amazon}/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
-      )
       // .get(
-      //   `http://localhost:3008/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
+      //   `${amazon}/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
       // )
+      .get(
+        `http://localhost:3008/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
+      )
       .then(response => {
         this.setState({ reviews: response.data });
       })
@@ -86,8 +86,8 @@ class App extends React.Component {
 
   updateUserLikes(userId, likeType = 'plus') {
     axios
-      .put(`${amazon}/api/users/${userId}`, { params: { likeType } })
-      // .put(`/api/users/${userId}`, { params: { likeType } })
+      // .put(`${amazon}/api/users/${userId}`, { params: { likeType } })
+      .put(`/api/users/${userId}`, { params: { likeType } })
       .then(response => {
         console.log('user likes were updated', response);
       })
