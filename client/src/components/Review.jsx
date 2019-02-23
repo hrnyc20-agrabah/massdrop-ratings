@@ -1,22 +1,20 @@
 import React from 'react';
-import axios from 'axios';
 import Comment from './Comment.jsx';
 import ReactQuill from 'react-quill';
 import styled from 'styled-components';
-import moment from 'moment';
 import Stars from 'react-stars';
 import { PersonAdd } from 'styled-icons/material/PersonAdd';
 import { GroupAdd } from 'styled-icons/material/GroupAdd';
 import { ThumbUp } from 'styled-icons/material/ThumbUp';
 import { Reply } from 'styled-icons/material/Reply';
 import { Style } from '../../../utilities/styles.js';
+import { timeAgo } from '../../../utilities/utilities';
 
 const GrayReply = styled(Reply)`
   color: #849493;
   height: 1em;
   padding-bottom: 4px;
 `;
-
 const GrayThumbUp = styled(ThumbUp)`
   display: inline-block;
   color: #849493;
@@ -68,66 +66,6 @@ const TealGroupAdd = styled(GroupAdd)`
 //     </div>
 // </div >
 
-const ReviewCard = styled.div`
-  font-family: 'Lato';
-  width: 100%;
-`;
-const StyledReviewCard = styled.div`
-	display: block;
-	font-family: 'Helvetica';
-	font-weight: 300;
-	font-size: 13px;
-	line-height: 20px;
-	color: #5b6a69;
-	max-width: 500px;
-	border-style: solid;
-	border-width: thin;
-	border-color: #D3D3D3;
-	box-shadow: 0.75px 0.75px #D3D3D3;
-	border-radius: 4px;
-	padding: 20px;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	margin-left 10px;
-`;
-const StyledAvatar = styled.img`
-  display: inline-block;
-  vertical-align: middle;
-  max-width: 32px;
-  max-height: 32px;
-  border-radius: 50%;
-  border: 1px solid #d9dede;
-  cursor: pointer;
-`;
-const StyledUsername = styled.div`
-  display: inline-block;
-  margin-left: 10px;
-  font-weight: bold;
-  font-size: 12px;
-  &:hover {
-    color: #18d7cc;
-  }
-  cursor: pointer;
-`;
-const LikesCount = styled.div`
-  display: inline-block;
-  font-family: 'Lato';
-  font-weight: bold;
-  font-size: 11px;
-  text-align: center;
-  min-width: 20px;
-  line-height: 14px;
-  letter-spacing: 0.9px;
-  color: #849493;
-  border: solid #d6d6d6;
-  border-width: 1px;
-  border-radius: 3px;
-  margin-left: 5px;
-  margin-right: 0;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 1px;
-`;
 const StyledTime = styled.div`
   display: inline-block;
   float: right;
@@ -216,7 +154,14 @@ class Review extends React.Component {
       editorHtml: '',
       isEditorShown: false,
       quillPlaceholder: 'Add a reply...',
+      isUserFollowed: false,
     };
+    this.addFollower = this.addFollower.bind(this);
+  }
+
+  addFollower() {
+    this.setState({ isUserFollowed: !this.state.isUserFollowed });
+    // on click change state
   }
   render() {
     const {
@@ -251,98 +196,89 @@ class Review extends React.Component {
       //       <div class="user-status">Verified purchaser</div>
       //       <div class='review-body'>lnasdlgnldfngm,sdfng,msdfng msdfngmsdfngmsdfngmsdfngmsdfngmsdfngmsdfngmsdf ngmsdfngmsdfngmsdfngmsdfngmsdfngmsdfngms dfngmsdfngmsdfngmsdfng,mnsdf,mgnsdf,m ng,msdfbg,bm dsfbn,mvn adf,mgn</div>
       //     </div>
-
       //   </div>
       // </div>
-
-      <ReviewCard>
-        <StyledAvatar src={user_avatar} />
-        <StyledUsername>{user_name}</StyledUsername>
-        <LikesCount>{user_likesQty}</LikesCount>
-        {this.state.isAdded ? <TealGroupAdd /> : <TealPersonAdd />}
-
-        <StyledTime>{review_date}</StyledTime>
+      <Style.ReviewCard>
+        <Style.UserW>
+          <Style.UserAvatar src={user_avatar} />
+          <Style.UserDataW>
+            <Style.UserName>{user_name}</Style.UserName>
+            <Style.UserLikesCount>{user_likesQty}</Style.UserLikesCount>
+            {this.state.isAdded ? (
+              <Style.TealGroupAdd />
+            ) : (
+                <Style.TealPersonAdd />
+              )}
+          </Style.UserDataW>
+          <Style.UserDate>{timeAgo(JSON.parse(review_date))}</Style.UserDate>
+        </Style.UserW>
         {user_isVerified === 1 ? (
-          <StyledVerified>VERIFIED PURCHASER</StyledVerified>
+          <Style.isVerified>VERIFIED PURCHASER</Style.isVerified>
         ) : null}
-
-        <StyledReviewBody>{review_body}</StyledReviewBody>
-        <StyledReviewCommentFooter>
-          <GrayThumbUp />
-          <ReplyWrapper
-            onClick={() => {
-              this.setState({ isEditorShown: true });
-            }}
-          >
-            {' '}
-            <GrayReply /> REPLY
-          </ReplyWrapper>
-          {this.state.isEditorShown ? (
-            <div>
-              <ReactQuill
-                theme="snow"
-                onChange={this.handleChange}
-                value={this.state.editorHtml}
-                modules={{
-                  toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    [{ list: 'ordered' }, { list: 'bullet' }],
-                    ['link', 'image'],
-                  ],
-                  clipboard: {
-                    matchVisual: false,
-                  },
-                }}
-                formats={[
-                  'bold',
-                  'italic',
-                  'underline',
-                  'strike',
-                  'list',
-                  'bullet',
-                  'link',
-                  'image',
-                ]}
-                bounds={'.app'}
-                placeholder={this.state.quillPlaceholder}
-              />
-              {this.state.editorHtml.length > 0 ? (
-                <StyledActiveSubmitButton onClick={this.createComment}>
-                  SUBMIT
-                </StyledActiveSubmitButton>
-              ) : (
-                  <StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>
-                )}
-              <StyledCancelButton
-                onClick={() => {
-                  this.setState({ isEditorShown: false });
-                }}
-              >
-                CANCEL
-              </StyledCancelButton>
-            </div>
-          ) : null}
-          {comments.length &&
-            comments.map((comment, key) => (
-              <Comment
-                submitReply={this.props.submitReply}
-                comment={comment}
-                key={comment.comment_id}
-              />
-            ))}
-        </StyledReviewCommentFooter>
-      </ReviewCard>
+        <Style.ReviewBody>{review_body}</Style.ReviewBody>
+        <div
+          onClick={() => {
+            this.setState({ isEditorShown: true });
+          }}
+        >
+          {' '}
+          REPLY
+        </div>
+        {this.state.isEditorShown ? (
+          <div>
+            <ReactQuill
+              theme="snow"
+              onChange={this.handleChange}
+              value={this.state.editorHtml}
+              modules={{
+                toolbar: [
+                  ['bold', 'italic', 'underline', 'strike'],
+                  [{ list: 'ordered' }, { list: 'bullet' }],
+                  ['link', 'image'],
+                ],
+                clipboard: {
+                  matchVisual: false,
+                },
+              }}
+              formats={[
+                'bold',
+                'italic',
+                'underline',
+                'strike',
+                'list',
+                'bullet',
+                'link',
+                'image',
+              ]}
+              bounds={'.app'}
+              placeholder={this.state.quillPlaceholder}
+            />
+            {this.state.editorHtml.length > 0 ? (
+              <StyledActiveSubmitButton onClick={this.createComment}>
+                SUBMIT
+              </StyledActiveSubmitButton>
+            ) : (
+                <StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>
+              )}
+            <StyledCancelButton
+              onClick={() => {
+                this.setState({ isEditorShown: false });
+              }}
+            >
+              CANCEL
+            </StyledCancelButton>
+          </div>
+        ) : null}
+        {comments.length &&
+          comments.map(comment => (
+            <Comment
+              submitReply={this.props.submitReply}
+              comment={comment}
+              key={comment.comment_id}
+            />
+          ))}
+      </Style.ReviewCard>
     );
   }
 }
-
-/*
-ReviewsList
-    Review
-        commentsList
-            comment (2 components : 1 to display, 1 to edit comment)
-
-
-*/
-
 export default Review;

@@ -17,7 +17,55 @@ const GrayReply = styled(Reply)`
   }
   cursor: pointer;
 `;
-
+const GrayThumbUp = styled(ThumbUp)`
+  color: #849493;
+  height: 1em;
+  &:hover {
+    color: #18d7cc;
+  }
+  cursor: pointer;
+`;
+const StyledAvatar = styled.img`
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 32px;
+  max-height: 32px;
+  border-radius: 50%;
+  border: 1px solid #d9dede;
+  margin-top: 10px;
+  cursor: pointer;
+`;
+const StyledUsername = styled.div`
+  display: inline-block;
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 12px;
+  &:hover {
+    color: #18d7cc;
+  }
+  cursor: pointer;
+`;
+const LikesCount = styled.div`
+display: inline-block;
+	font-family: 'Lato';
+	font-weight: bold;
+	font-size: 11px;
+    text-align: center;
+	display: inline-block
+	min-width: 20px;
+    line-height: 14px;
+	letter-spacing: 0.9px;
+	color: #849493;
+    border: solid #d6d6d6;
+    border-width: 1px;
+    border-radius: 3px;
+    margin-left: 5px;
+    margin-right: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 1px;
+    cursor: default;
+`;
 const TealPersonAdd = styled(PersonAdd)`
   display: inline-block;
   color: #14b6ad;
@@ -38,66 +86,14 @@ const TealGroupAdd = styled(GroupAdd)`
   }
   cursor: pointer;
 `;
-const GrayThumbUp = styled(ThumbUp)`
-  color: #849493;
-  height: 1em;
-  &:hover {
-    color: #18d7cc;
-  }
-  cursor: pointer;
-`;
-const StyledCommentWrapper = styled.div`
-	display: block;
-	font-family: 'Helvetica';
-	font-weight: 300;
-	font-size: 13px;
-	line-height: 20px;
-	color: #5b6a69;
-	max-width: 500px;
-	border-style: solid;
-	border-width: thin;
-	border-color: #D3D3D3;
-	box-shadow: 0.75px 0.75px #D3D3D3;
-	border-radius: 4px;
-	padding: 20px;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	margin-left 10px;
-`;
-
-const StyledCommentBody = styled.div`
-  display: inline;
-  margin-left: 3px;
-`;
-const LikesCount = styled.div`
-	font-family: 'Lato';
-	font-weight: bold;
-	font-size: 11px;
-    text-align: center;
-	display: inline-block
-	min-width: 20px;
-    line-height: 14px;
-	letter-spacing: 0.9px;
-	color: #849493;
-    border: solid #d6d6d6;
-    border-width: 1px;
-    border-radius: 3px;
-    margin-left: 5px;
-    margin-right: 0;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 1px;
-    cursor: default;
-`;
-const StyledUsername = styled.div`
+const StyledTime = styled.div`
   display: inline-block;
-  margin-left: 5px;
-  font-weight: bold;
+  float: right;
+  vertical-align: middle;
   font-size: 12px;
-  &:hover {
-    color: #18d7cc;
-  }
-  cursor: pointer;
+  line-height: 20px;
+  padding-top: 5px;
+  padding-right: -4px;
 `;
 const StyledRepliedTo = styled.div`
   display: inline-block;
@@ -117,25 +113,7 @@ const StyledCommentCard = styled.div`
   background: gray;
   border: solid 1px black;
 `;
-const StyledAvatar = styled.img`
-  display: inline-block;
-  vertical-align: middle;
-  max-width: 32px;
-  max-height: 32px;
-  border-radius: 50%;
-  border: 1px solid #d9dede;
-  margin-top: 10px;
-  cursor: pointer;
-`;
-const StyledTime = styled.div`
-  display: inline-block;
-  float: right;
-  vertical-align: middle;
-  font-size: 12px;
-  line-height: 20px;
-  padding-top: 5px;
-  padding-right: -4px;
-`;
+
 const ReplyWrapper = styled.div`
   display: block;
 `;
@@ -229,20 +207,24 @@ class Comment extends React.Component {
     } = this.props.comment;
 
     return (
-      <StyledCommentCard>
+      <div>
         <div>
-          <StyledAvatar src={creator_avatar} />
-          <StyledUsername>{creator_name}</StyledUsername>
-          <LikesCount> {creator_likesQty} </LikesCount>
-          {this.state.isAdded ? <TealGroupAdd /> : <TealPersonAdd />}
-          <StyledTime>{comment_date}</StyledTime>
+          <Style.UserAvatar img src={creator_avatar} />
+          <Style.UserName>{creator_name}</Style.UserName>
+          <Style.UserLikesCount>{creator_likesQty}</Style.UserLikesCount>
+          {this.state.isAdded ? (
+            <Style.TealGroupAdd />
+          ) : (
+            <Style.TealPersonAdd />
+          )}
+          <Style.UserDate>{comment_date}</Style.UserDate>
           <br />
-          <StyledRepliedTo>{replier_name}</StyledRepliedTo>
-          <StyledCommentBody>{comment_body}</StyledCommentBody>
+          <div>{replier_name}</div>
+          <div>{comment_body}</div>
         </div>
         <br />
-        <ReplyWrapper>
-          <GrayThumbUp />
+        <div>
+          {/* <GrayThumbUp /> */}
           <div
             onClick={() => {
               this.setState({ isEditorShown: true });
@@ -250,7 +232,7 @@ class Comment extends React.Component {
           >
             Reply
           </div>
-        </ReplyWrapper>
+        </div>
         {this.state.isEditorShown ? (
           <div>
             <ReactQuill
@@ -285,8 +267,8 @@ class Comment extends React.Component {
                 SUBMIT
               </StyledActiveSubmitButton>
             ) : (
-                <StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>
-              )}
+              <StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>
+            )}
             <StyledCancelButton
               onClick={() => {
                 this.setState({ isEditorShown: false });
@@ -296,7 +278,7 @@ class Comment extends React.Component {
             </StyledCancelButton>
           </div>
         ) : null}
-      </StyledCommentCard>
+      </div>
     );
   }
 }

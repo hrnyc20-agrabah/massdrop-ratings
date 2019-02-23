@@ -39,7 +39,7 @@ const timeAgo = timestamp => {
   return outputTime;
 };
 // eslint-disable-next-line no-undef
-module.exports = {
-  titleize,
-  timeAgo,
-};
+module.exports = { titleize, timeAgo };
+
+// var test = "2018-08-01T15:56:47.668Z"
+// console.log(timeAgo(test))

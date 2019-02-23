@@ -13,21 +13,36 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/../client/dist`));
 
 // serving static file
-app.get('/items/:itemname', (req, res) => {
+app.get('/products/:itemid', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-app.get('/api/items/:itemname/reviews', (req, res) => {
-  const itemname = utils.titleize(req.params.itemname);
-  const query = `SELECT * FROM reviews \
+app.get('/api/products/:itemid/reviews', (req, res) => {
+  const sortMap = {
+    // eslint-disable-next-line prettier/prettier
+    'new': 'review_date DESC',
+    // eslint-disable-next-line prettier/prettier
+    'high': 'review_star_rating DESC',
+    // eslint-disable-next-line prettier/prettier
+    'low': 'review_star_rating ASC',
+    // eslint-disable-next-line prettier/prettier
+    'top': 'review_likes DESC',
+  };
+  const itemid = req.params.itemid;
+  const sortBy = req.query.sort;
+  let query = `SELECT * FROM reviews \
                 JOIN users ON users.user_id = reviews.review_author_id \
-                WHERE review_item_id = (SELECT item_id FROM items WHERE item_name="${itemname}") \
-                ORDER BY review_date ASC`;
+                WHERE review_item_id="${itemid}"`;
+  query +=
+    req.query.like !== ''
+      ? ` AND reviews.review_body LIKE '%${req.query.like}%'`
+      : '';
+  query += sortBy ? ` ORDER BY ${sortMap[sortBy]}` : '';
   sqlite.all(query, (err, docs) => {
     if (err) {
       // eslint-disable-next-line no-console
       console.log(
-        `could not get response from DB on item name ${itemname} - SERVER`,
+        `could not get response from DB on item name ${itemid} - SERVER`,
         err,
       );
       res.sendStatus(404);
@@ -67,8 +82,8 @@ app.get('/api/items/:itemname/reviews', (req, res) => {
             JOIN users AS creator ON creator.user_id = comments.comment_author_id \
             JOIN users AS replier ON replier.user_id = comments.comment_replied_to_id \
             WHERE comments.comment_review_id="${
-          review.review_id
-          }" ORDER BY comments.comment_date ASC`;
+              review.review_id
+            }" ORDER BY comments.comment_date ASC`;
         // eslint-disable-next-line no-unused-vars
         promises.push(
           // eslint-disable-next-line no-unused-vars
@@ -92,6 +107,22 @@ app.get('/api/items/:itemname/reviews', (req, res) => {
       Promise.all(promises).then(() => {
         res.send(allReviewsWithComments);
       });
+    }
+  });
+});
+
+app.put(`/api/users/:userId`, (req, res) => {
+  const operation = req.query.likeType === 'plus' ? '+' : '-';
+  const userId = req.params.userId;
+  const query = `UPDATE users SET user_likesQty=user_likesQty ${operation} 1 WHERE user_id=${Number(
+    userId,
+  )}`;
+  sqlite.exec(query, (err, response) => {
+    if (err) {
+      // eslint-disable-next-line no-console
+      console.log(`did not update likes for user ${userId}`, err);
+    } else {
+      res.sendStatus(200);
     }
   });
 });
