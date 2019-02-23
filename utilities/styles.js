@@ -247,6 +247,7 @@ export const Style = {
     width: 100%;
     align-items: center;
     margin-bottom: 10px;
+    position: relative;
     flex: 4;
   `,
   UserName: styled.div`
@@ -297,8 +298,10 @@ export const Style = {
     font-size: 12px;
     line-height: 20px;
     padding-top: 5px;
+    position: absolute;
   `,
   isVerified: styled.div`
+    width: 100%;
     font-family: 'Lato';
     font-weight: 400;
     font-size: 12px;

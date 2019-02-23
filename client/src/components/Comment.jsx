@@ -179,7 +179,7 @@ class Comment extends React.Component {
 
   createComment() {
     const { comment, editorHtml } = this.state;
-    console.log('comment', comment);
+    // console.log('comment', comment);
     this.props.submitReply(comment.comment_review_id, editorHtml);
     //axios post request  - saving components (comment from props)
     //is success - need to render without refreshing
