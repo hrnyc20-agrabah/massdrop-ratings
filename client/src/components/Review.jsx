@@ -104,22 +104,6 @@ class Review extends React.Component {
     } = this.props.review;
 
     return (
-      // <div class="review-card">
-      //   <div class="user">
-      //     <div class="user-pic"></div>
-      //     <div class="user-inner-wrap">
-      //       <div class="user-info">
-      //         <div class="user-nc">
-      //           <div class="user-name">Jwb4467</div>
-      //           <div class="user-count">0</div>
-      //         </div>
-      //         <div class="user-time">5W</div>
-      //       </div>
-      //       <div class="user-status">Verified purchaser</div>
-      //       <div class='review-body'>lnasdlgnldfngm,sdfng,msdfng msdfngmsdfngmsdfngmsdfngmsdfngmsdfngmsdfngmsdf ngmsdfngmsdfngmsdfngmsdfngmsdfngmsdfngms dfngmsdfngmsdfngmsdfng,mnsdf,mgnsdf,m ng,msdfbg,bm dsfbn,mvn adf,mgn</div>
-      //     </div>
-      //   </div>
-      // </div>
       <Style.ReviewCard>
         <Style.ReviewW>
           <Style.UserW>
