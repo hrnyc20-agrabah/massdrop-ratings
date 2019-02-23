@@ -3,7 +3,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import styled from 'styled-components';
 import ReviewsTab from './components/ReviewsTab.jsx';
 import Search from './components/Search.jsx';
 import Sort from './components/Sort.jsx';
@@ -11,38 +10,39 @@ import Reviews from './components/Reviews.jsx';
 import Comment from './components/Comment.jsx';
 import { Style } from '../../utilities/styles.js';
 
-const StyledReviews = styled.div`
-  font-family: 'Lato';
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.9px;
-  color: #14b6ad;
-  cursor: hand;
-`;
-
-const ReviewsCommentsBlock = styled.div`
-  max-width: 500;
-`;
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       reviews: [],
+      showMenu: false,
+      searchQuery: '',
+      selectedOption: 'new',
+      sortOptions: [
+        // eslint-disable-next-line prettier/prettier
+        {
+          key: 'new',
+          value: 'NEWEST',
+        },
+      ],
       // currentItem: ''
     };
     this.getReviews = this.getReviews.bind(this);
+    this.changeSortOrder = this.changeSortOrder.bind(this);
+    this.clearQuery = this.clearQuery.bind(this);
     this.submitReply = this.submitReply.bind(this);
+    this.updateUserLikes = this.updateUserLikes.bind(this);
+    this.searchTerm = this.searchTerm.bind(this);
   }
 
   componentDidMount() {
-    let itemname = window.location.pathname.split('/')[2];
-    this.getReviews(itemname);
+    let itemid = window.location.pathname.split('/')[2];
+    this.getReviews(itemid, this.state.selectedOption);
   }
 
-  getReviews(itemname) {
+  getReviews(itemid, selectedOption, like = '') {
     axios
-      .get(`/api/items/${itemname}/reviews`)
+      .get(`/api/items/${itemid}/reviews?sort=${selectedOption}&like=${like}`)
       .then(response => {
         this.setState({ reviews: response.data });
       })
@@ -50,7 +50,20 @@ class App extends React.Component {
         console.log('Error getting all reviews from DB:    ', error),
       );
   }
+  changeSortOrder(e) {
+    e.preventDefault();
+    this.setState({
+      selectedOption: e.target.value,
+      showMenu: false,
+    });
+  }
+  clearQuery() {
+    this.setState({ searchQuery: '' });
+  }
 
+  searchTerm(term) {
+    this.getReviews(param1, param2, searchQuery);
+  }
   submitReply(reviewId, commentObj) {
     console.log('submitting reply with', reviewId, commentObj);
     this.setState();
@@ -64,20 +77,33 @@ class App extends React.Component {
   //take the object with 2 ID , text, etc and save to DB
   // pass the function down to Comment
 
+  updateUserLikes(userId, likeType = 'plus') {
+    axios
+      .put(`/api/users/${userId}`, { params: { likeType } })
+      .then(response => {
+        console.log('user likes were updated', response);
+      })
+      .catch(error => console.log('error update likes in DB:    ', error));
+  }
+
   render() {
     return (
       <Style.AppOuterWrapper>
         <ReviewsTab reviewsQuantity={this.state.reviews.length} />
         <Style.SearchSortWrapper>
-          <Search />
-          <Sort />
+          <Search clearQuery={this.clearQuery} searchFor={this.searchTerm} />
+          <Sort
+            changeSortOrder={this.changeSortOrder}
+            sortOptions={this.state.sortOptions}
+            selectedOption={this.state.selectedOption}
+          />
         </Style.SearchSortWrapper>
-        <ReviewsCommentsBlock>
+        <Style.ReviewsCommentsWrapper>
           <Reviews
             reviews={this.state.reviews}
             submitReply={this.submitReply}
           />
-        </ReviewsCommentsBlock>
+        </Style.ReviewsCommentsWrapper>
       </Style.AppOuterWrapper>
     );
   }

@@ -57,7 +57,7 @@ db.serialize(() => {
   for (let r = 1; r < 501; r++) {
     insertReviews.run(
       r, // 1 review.id,
-      JSON.stringify(faker.date.between('2018-05-01', '2019-02-20')), // 2 review.date,
+      faker.date.between('2018-05-01', '2019-02-20')x, // 2 review.date,
       faker.random.number({
         min: 1,
         max: 500,
@@ -86,7 +86,7 @@ db.serialize(() => {
   for (c = 1; c < 2001; c++) {
     insertComments.run(
       // id is set to AUTOINCREMENT
-      JSON.stringify(faker.date.between('2018-05-01', '2019-02-20')), // comment.date,
+      faker.date.between('2018-05-01', '2019-02-20'), // comment.date,
       faker.random.number({
         min: 1,
         max: 500,

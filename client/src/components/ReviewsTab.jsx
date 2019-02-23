@@ -7,7 +7,9 @@ const ReviewsTab = props => {
     <Style.ReviewsTabWrapper>
       <Style.ReviewsTab>
         <Style.Reviews>REVIEWS</Style.Reviews>
-        <Style.ReviewsCount>{props.reviewsQuantity}</Style.ReviewsCount>
+        {props.reviewsQuantity > 0 ? (
+          <Style.ReviewsCount>{props.reviewsQuantity}</Style.ReviewsCount>
+        ) : null}
       </Style.ReviewsTab>
     </Style.ReviewsTabWrapper>
   );
