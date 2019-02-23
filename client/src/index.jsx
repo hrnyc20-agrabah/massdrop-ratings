@@ -10,7 +10,7 @@ import Reviews from './components/Reviews.jsx';
 import Comment from './components/Comment.jsx';
 import { Style } from '../../utilities/styles.js';
 
-var amazon = 'ec2-3-83-204-17.compute-1.amazonaws.com';
+var amazon = 'http://ec2-3-83-204-17.compute-1.amazonaws.com';
 
 class App extends React.Component {
   constructor(props) {
@@ -48,7 +48,7 @@ class App extends React.Component {
         `${amazon}/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
       )
       // .get(
-      //   `/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
+      //   `http://localhost:3008/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
       // )
       .then(response => {
         this.setState({ reviews: response.data });
