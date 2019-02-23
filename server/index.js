@@ -13,11 +13,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/../client/dist`));
 
 // serving static file
-app.get('/items/:itemid', (req, res) => {
+app.get('/products/:itemid', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-app.get('/api/items/:itemid/reviews', (req, res) => {
+app.get('/api/products/:itemid/reviews', (req, res) => {
   const sortMap = {
     // eslint-disable-next-line prettier/prettier
     'new': 'review_date DESC',
@@ -82,8 +82,8 @@ app.get('/api/items/:itemid/reviews', (req, res) => {
             JOIN users AS creator ON creator.user_id = comments.comment_author_id \
             JOIN users AS replier ON replier.user_id = comments.comment_replied_to_id \
             WHERE comments.comment_review_id="${
-          review.review_id
-          }" ORDER BY comments.comment_date ASC`;
+              review.review_id
+            }" ORDER BY comments.comment_date ASC`;
         // eslint-disable-next-line no-unused-vars
         promises.push(
           // eslint-disable-next-line no-unused-vars

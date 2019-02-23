@@ -207,8 +207,8 @@ class Review extends React.Component {
             {this.state.isAdded ? (
               <Style.TealGroupAdd />
             ) : (
-              <Style.TealPersonAdd />
-            )}
+                <Style.TealPersonAdd />
+              )}
           </Style.UserDataW>
           <Style.UserDate>{timeAgo(JSON.parse(review_date))}</Style.UserDate>
         </Style.UserW>
@@ -258,8 +258,8 @@ class Review extends React.Component {
                 SUBMIT
               </StyledActiveSubmitButton>
             ) : (
-              <StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>
-            )}
+                <StyledDisabledSubmitButton>SUBMIT</StyledDisabledSubmitButton>
+              )}
             <StyledCancelButton
               onClick={() => {
                 this.setState({ isEditorShown: false });

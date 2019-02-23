@@ -10,6 +10,8 @@ import Reviews from './components/Reviews.jsx';
 import Comment from './components/Comment.jsx';
 import { Style } from '../../utilities/styles.js';
 
+var amazon = 'ec2-3-83-204-17.compute-1.amazonaws.com';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -42,7 +44,12 @@ class App extends React.Component {
 
   getReviews(itemid, selectedOption, like = '') {
     axios
-      .get(`/api/items/${itemid}/reviews?sort=${selectedOption}&like=${like}`)
+      .get(
+        `${amazon}/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
+      )
+      // .get(
+      //   `/api/products/${itemid}/reviews?sort=${selectedOption}&like=${like}`,
+      // )
       .then(response => {
         this.setState({ reviews: response.data });
       })
@@ -79,7 +86,8 @@ class App extends React.Component {
 
   updateUserLikes(userId, likeType = 'plus') {
     axios
-      .put(`/api/users/${userId}`, { params: { likeType } })
+      .put(`${amazon}/api/users/${userId}`, { params: { likeType } })
+      // .put(`/api/users/${userId}`, { params: { likeType } })
       .then(response => {
         console.log('user likes were updated', response);
       })
