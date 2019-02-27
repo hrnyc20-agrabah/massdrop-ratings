@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const sqlite = require('../database/connect.js');
+const morgan = require('morgan')
 const utils = require('../utilities/utilities.js');
 const cors = require('cors');
 
@@ -30,16 +31,19 @@ app.get('/api/products/:itemid/reviews', (req, res) => {
     // eslint-disable-next-line prettier/prettier
     'top': 'review_likes DESC',
   };
+
   const itemid = req.params.itemid;
   const sortBy = req.query.sort;
   let query = `SELECT * FROM reviews \
                 JOIN users ON users.user_id = reviews.review_author_id \
                 WHERE review_item_id="${itemid}"`;
   query +=
-    req.query.like !== ''
+    req.query.like !== '' && req.query.like !== undefined
       ? ` AND reviews.review_body LIKE '%${req.query.like}%'`
       : '';
   query += sortBy ? ` ORDER BY ${sortMap[sortBy]}` : '';
+  console.log(req.query.like)
+  console.log(req.params.itemid)
   sqlite.all(query, (err, docs) => {
     if (err) {
       // eslint-disable-next-line no-console
@@ -87,6 +91,7 @@ app.get('/api/products/:itemid/reviews', (req, res) => {
               review.review_id
             }" ORDER BY comments.comment_date ASC`;
         // eslint-disable-next-line no-unused-vars
+        // pushing promises
         promises.push(
           // eslint-disable-next-line no-unused-vars
           new Promise((resolve, reject) => {
@@ -106,6 +111,7 @@ app.get('/api/products/:itemid/reviews', (req, res) => {
           }),
         );
       });
+
       Promise.all(promises).then(() => {
         res.send(allReviewsWithComments);
       });
