@@ -90,6 +90,7 @@ app.get('/api/products/:itemid/reviews', (req, res) => {
             WHERE comments.comment_review_id="${
               review.review_id
             }" ORDER BY comments.comment_date ASC`;
+
         // eslint-disable-next-line no-unused-vars
         // pushing promises
         promises.push(
