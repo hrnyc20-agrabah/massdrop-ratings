@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['last'],
+  extends: ['airbnb', 'plugin:prettier/recommended'],
 };
