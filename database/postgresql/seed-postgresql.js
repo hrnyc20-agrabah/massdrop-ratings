@@ -1,13 +1,13 @@
 const connConfig = require('./secret');
 const pgp = require('pg-promise')();
 const { schema } = require('./postgres-helpers');
-// PG POOL instead of client > CLIENT
+const { asyncSeed1 } = require('../seed-helpers')
 
 const db = pgp(connConfig); // connection
 
 // set static column set
 const columnSet = pgp.helpers.ColumnSet([
-'id',
+  // {name: 'id', prop: 'review_id'},
   'date',
   {name: 'review_star_rating', def: 0},
   {name: 'review_item_rating', def: 0},
@@ -23,24 +23,7 @@ const initialize = (async function() {
   await db.any(schema); // create table
 
   // generate massive amounts of data for bulk insertion
-  const q =
-    'INSERT INTO reviews(id, date, review_star_rating, review_item_rating, comments, author_id, author_name, body, likes) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)';
-
-  // insert
-  const insertValues = [
-    1,
-    '2018-3-22',
-    5,
-    3,
-    '[{"username": "vinny"}]',
-    5,
-    'vincent',
-    'asdfasdfasdfasdfasdfasdf',
-    22,
-  ];
-
-  await db.none(q, insertValues);
-  // const result = await db.any('SELECT * FROM reviews');
-  // console.log(result);
+  await asyncSeed1(db, 10000000, 200000, columnSet, pgp)
+  console.log('done')
   await db.end();
 })();
